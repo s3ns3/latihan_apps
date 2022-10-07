@@ -1,0 +1,19 @@
+const kParamNameSrac = 'srac';
+const kParamNameDsac = 'dsac';
+const kParamNameAmount = 'amount';
+const kParamNameBank = 'bank';
+const kParamNameRefNo = 'refno';
+const kParamNameDescription = 'desc';
+const kParamNameCurrency = 'currency';
+const kParamNameBiller = 'biller';
+const kParamNameNone = 'none';
+const kParamNameOldPin = 'oldpin';
+const kParamNameNewPin = 'newpin';
+const kParamNameConfirmPin = 'confpin';
+const kParamNameBillingId = 'billid';
+const kParamNameSaveAcc = 'saveacc';
+const prefPhone='prefPhone';
+
+const kParamNameProxy='proxy';
+const kParamNameProxyNo='proxyNo';
+const kParamNamePurpose='purpose';
