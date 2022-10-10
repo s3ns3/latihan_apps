@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:latihan_apps/vo/selection_vo.dart';
 
@@ -11,7 +10,7 @@ enum ContentInputType { text, multiline, password, numeric, list,listImage, date
 
 class ContentInputVO {
   final String? paramName;
-  final String? label;
+  String? label;
   String? prefixIcon; // use Image.asset for prefix
   final String? suffixIcon;
   final bool hasNext; // flag to indicate action next or done
@@ -20,14 +19,19 @@ class ContentInputVO {
   // final bool obscureText;
   // final String regex;
 
-  // cannot be final because initialize in init, not in constructor
-  List<SelectionVO> selections = [];
-  TextEditingController? _textController; // only applicable if type = list
+  final List<SelectionVO> _selections = [];
+  SelectionVO? _selectedItem;
+  //NEVER USE UI COMPONENT in logic / data
+  //TextEditingController? _textController; // only applicable if type = list
 
   String inputValue = '';
   DateTime? _inputDate;
   DateTime? firstDate; // used with inputType.date for firstDate
   DateTime? lastDate; // used with inputType.date for lastDate
+
+  // for dependent list
+  ContentInputVO? childInputVO;  // for list depends on list
+  int _parentFilterId = 0; // parent selected id
 
   set inputDate(DateTime? date) {
     _inputDate = date;
@@ -40,22 +44,54 @@ class ContentInputVO {
 
   DateTime? get inputDate => _inputDate;
 
-  set selectedItem(SelectionVO? selected) {
-    inputValue = selected?.valueSms ?? '';
-    _textController?.text = selectedItem?.display ?? '';
+  set selections(List<SelectionVO> list) {
+    _selections..clear()..addAll(list);
+    selectedItem = null;
   }
-
-  SelectionVO? get selectedItem {
-    for (var item in selections) {
-      if (item.valueSms == inputValue) return item;
+  List<SelectionVO> get selections {
+    if (_parentFilterId == 0) {
+      // no parentFilter is set
+      if (_selections.isNotEmpty) {
+        // if list not empty, then it means parent has not been selected
+        if (_selections[0].parentId > 0) return [];
+      }
+      return _selections;
+    } else {
+      // parentFilter is set
+      List<SelectionVO> filtered = [];
+      for (var item in _selections) {
+        if (item.parentId == _parentFilterId) {
+          // only get item when parentFilter is the same
+          filtered.add(item);
+        }
+      }
+      return filtered;
     }
-    return null;
   }
 
-  set textController(TextEditingController textEditingController) {
-    _textController = textEditingController;
-    _textController?.text = selectedItem?.display ?? '';
+  set parentFilterId(int id) {
+    if (_parentFilterId == id) return;
+    _parentFilterId = id;
+    selectedItem = null;
   }
+  int get parentFilterId => _parentFilterId;
+
+
+  set selectedItem(SelectionVO? selected) {
+    _selectedItem = selected;
+    inputValue = _selectedItem?.display ?? '';
+    // inputValue = selected?.valueSms ?? '';
+    // _textController?.text = selectedItem?.display ?? '';
+
+    // if childInput exists, then we need to inform that parent is changing
+    childInputVO?.parentFilterId = _selectedItem?.id??0;
+  }
+  SelectionVO? get selectedItem => _selectedItem;
+
+  // set textController(TextEditingController textEditingController) {
+  //   _textController = textEditingController;
+  //   _textController?.text = selectedItem?.display ?? '';
+  // }
 
   ContentInputVO({
     required this.paramName,
@@ -66,6 +102,7 @@ class ContentInputVO {
     required this.inputType,
     this.inputValue = '',
     this.category = 0,
+    this.childInputVO
     });
 
   @override

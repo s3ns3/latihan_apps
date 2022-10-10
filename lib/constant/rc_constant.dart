@@ -1,0 +1,1 @@
+const rcSuccess = '0';

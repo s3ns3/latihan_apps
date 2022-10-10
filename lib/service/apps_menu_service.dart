@@ -123,7 +123,7 @@ class AppsMenuService {
       label: 'Denom',
       inputType: ContentInputType.list,
       paramName: kParamNameAmount,
-      category: kCategoryDenomTopupTsel);
+      category: kCategoryDenomProvider);
   static final contentDenomWallet= ContentInputVO(
       prefixIcon: 'assets/image/icons/fields/jumlah_bayar_field.png',
       suffixIcon: 'assets/image/icons/fields/arrow_down_field.png',
@@ -159,7 +159,9 @@ class AppsMenuService {
       label: 'List Provider',
       inputType: ContentInputType.list,
       paramName: kParamNameBiller,
-      category: kCategoryProvider);
+      category: kCategoryProvider,
+    childInputVO: contentDenomTopup
+  );
 
   static final contentPaketData= ContentInputVO(
       prefixIcon: 'assets/image/icons/menu/menu_multipayment.png',
@@ -236,16 +238,23 @@ class AppsMenuService {
     return list;
   }
 
-  Future<List<SelectionVO>> getListSelection(int category) async {
-    List<SelectionVO> list = [];
-    List<SelectionVO>? listSelection = _mapSelection[category];
-    if (listSelection != null) list.addAll(listSelection);
+  // Future<List<SelectionVO>> getListSelection(int category) async {
+  //   List<SelectionVO> list = [];
+  //   List<SelectionVO>? listSelection = _mapSelection[category];
+  //   if (listSelection != null) list.addAll(listSelection);
+  //
+  //   return list;
+  // } // getListSelection
 
-    return list;
-  } // getListSelection
+  List<ContentInputVO> getListContent(int menuType) {
+    List<ContentInputVO> list = _mapContent[menuType] ?? [];
 
-  List<ContentInputVO>? getListContent(int menuType) {
-    List<ContentInputVO>? list = _mapContent[menuType];
+    for (var vo in list) {
+      if (vo.inputType == ContentInputType.list) {
+        // populate list if necessary
+        vo.selections = _mapSelection[vo.category] ?? [];
+      }
+    }
 
     // for (var vo in list!) {
     //   if (vo.parentId > 0) {

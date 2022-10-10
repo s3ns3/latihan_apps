@@ -112,6 +112,7 @@ const kCategoryDenomDataXL = 15;
 const kCategoryDenomWallet = 12;
 const kCategoryMonth = 13;
 const kCategoryDenomTopupXl = 14;
+const kCategoryDenomProvider = 16;
 
 //category transaction
 const kCategoryMenuTypeTransfer = 100;

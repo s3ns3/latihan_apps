@@ -24,13 +24,13 @@ class SearchComboboxV2State extends State<SearchComboboxV2> {
   static const id = 'ListSelectionState';
 
   final _textController = TextEditingController();
-  List<SelectionVO>? listData;
+  // List<SelectionVO>? listData;
   Timer? _searchDebounce;
   @override
   void initState() {
     super.initState();
-    listData =
-        AppsMenuService.get().populateListSelection(widget.inputVO.category);
+    // listData =
+    //     AppsMenuService.get().populateListSelection(widget.inputVO.category);
   }
 
   @override
@@ -44,7 +44,9 @@ class SearchComboboxV2State extends State<SearchComboboxV2> {
 
   @override
   Widget build(BuildContext context) {
-    widget.inputVO.textController = _textController;
+    // widget.inputVO.textController = _textController;
+    _textController.text = widget.inputVO.inputValue;
+
     Widget? prefixIcon;
     if (widget.inputVO.prefixIcon != null) {
       prefixIcon = Padding(
@@ -60,7 +62,7 @@ class SearchComboboxV2State extends State<SearchComboboxV2> {
         padding: const EdgeInsets.only(top: 5, bottom: 5),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
-              padding: EdgeInsets.only(bottom: 3.0),
+              padding: const EdgeInsets.only(bottom: 3.0),
               child: Row(
                 children: [
                   Text(widget.inputVO.label!,
@@ -105,9 +107,9 @@ class SearchComboboxV2State extends State<SearchComboboxV2> {
                 minWidth: 25,
                 minHeight: 25,
               ),
-              enabledBorder: OutlineInputBorder(
+              enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
               ),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.blue, width: 1.0),
@@ -116,9 +118,9 @@ class SearchComboboxV2State extends State<SearchComboboxV2> {
             ),
             readOnly: true,
             onTap: () {
-              widget.inputVO.selections = AppsMenuService()
-                  .populateListSelection(widget.inputVO.category);
-              debugPrint('[$id] tap on selection $listData');
+              // widget.inputVO.selections = AppsMenuService()
+              //     .populateListSelection(widget.inputVO.category);
+              // debugPrint('[$id] tap on selection $listData');
               showModalBottomSheet(
                   context: context,
                   shape: const RoundedRectangleBorder(
@@ -173,7 +175,7 @@ class SearchComboboxV2State extends State<SearchComboboxV2> {
                   )
               );
             }
-            debugPrint('list widget : $widgets');
+            // debugPrint('list widget : $widgets');
             return SizedBox(
                 height: height,
                 child: Column(
@@ -206,11 +208,11 @@ class SearchComboboxV2State extends State<SearchComboboxV2> {
                         borderRadius:  BorderRadius.circular(10),
                       ),
                       child: TextField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
-                          contentPadding: const EdgeInsets.fromLTRB(30.0, 7.0, 0.0, 5.0),
+                          contentPadding: EdgeInsets.fromLTRB(30.0, 7.0, 0.0, 5.0),
                           focusColor: Colors.black,
-                          prefixIcon: const Icon(Icons.search, size: 20.0,color: Colors.black87,),
+                          prefixIcon: Icon(Icons.search, size: 20.0,color: Colors.black87,),
                           hintText: 'Cari',
                         ),
                         onChanged: (value) {
@@ -238,12 +240,15 @@ class SearchComboboxV2State extends State<SearchComboboxV2> {
   }
 
   void _selectItem(BuildContext context, SelectionVO item) {
-    if (item != null) {
-      debugPrint('[$id] selection $item');
-      widget.inputVO.selectedItem = item;
-    } else {
-      widget.inputVO.selectedItem = null;
-    }
+    // if (item != null) {
+    //   debugPrint('[$id] selection $item');
+    //   widget.inputVO.selectedItem = item;
+    // } else {
+    //   widget.inputVO.selectedItem = null;
+    // }
+    debugPrint('[$id] selection $item');
+    widget.inputVO.selectedItem = item;
+    _textController.text = widget.inputVO.inputValue;
     if (widget.onSubmitted != null) {
       widget.onSubmitted!(widget.inputVO.inputValue);
     }

@@ -15,11 +15,11 @@ class Transaction extends StatefulWidget {
 class _TransactionState extends State<Transaction> {
   static const ID = '_TransactionScreenState';
 
-  List<ContentInputVO> listContent = [];
+  late List<ContentInputVO> listContent;
   @override
   void initState() {
     super.initState();
-    listContent = AppsMenuService.get().getListContent(widget.menuVO.type)!;
+    listContent = AppsMenuService.get().getListContent(widget.menuVO.type);
   }
 
   @override
@@ -77,6 +77,12 @@ class _TransactionState extends State<Transaction> {
   } // _displayForm
 
   Widget _generateInputTypeFor(ContentInputVO contentVO) {
-    return AppsInputV2(inputVO: contentVO);
+    return AppsInputV2(inputVO: contentVO,
+      onSubmitted: (value) {
+        setState(() {
+          // just refresh screen
+        });
+      },
+    );
   } // _generateInputTypeFor
 }

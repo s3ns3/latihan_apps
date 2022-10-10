@@ -152,8 +152,17 @@ class DataArray{
   ],
 
     kCategoryProvider: [
-      SelectionVO(display: 'Telkomsel Prabayar', category:kCategoryDenomTopupTsel, valueSms: '00001', valueUssd: '1'),
-      SelectionVO(display: 'XL Prabayar',  category:kCategoryDenomTopupXl, valueSms: '00002', valueUssd: '2'),
+      SelectionVO(id: 1, display: 'Telkomsel Prabayar', category:kCategoryDenomTopupTsel, valueSms: '00001', valueUssd: '1'),
+      SelectionVO(id: 2, display: 'XL Prabayar',  category:kCategoryDenomTopupXl, valueSms: '00002', valueUssd: '2'),
+    ],
+
+    kCategoryDenomProvider: [
+      SelectionVO(parentId: 1, display: 'TSEL 15.000', valueSms: '15000', valueUssd: '1'),
+      SelectionVO(parentId: 1, display: 'TSEL 20.000', valueSms: '20000', valueUssd: '2'),
+      SelectionVO(parentId: 1, display: 'TSEL 25.000', valueSms: '25000', valueUssd: '3'),
+      SelectionVO(parentId: 2, display: 'XL 15.000', valueSms: '15000', valueUssd: '1'),
+      SelectionVO(parentId: 2, display: 'XL 30.000', valueSms: '30000', valueUssd: '2'),
+      SelectionVO(parentId: 2, display: 'XL 40.000', valueSms: '45000', valueUssd: '3'),
     ],
 
     kCategoryDenomTopupTsel: [

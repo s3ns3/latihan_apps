@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:latihan_apps/constant/apps_menu.dart';
 import 'package:latihan_apps/submenu_screen.dart';
 import 'package:latihan_apps/transaction.dart';
+import 'package:latihan_apps/transaction_new.dart';
 import 'package:latihan_apps/vo/menu_vo.dart';
 
 void main() {
@@ -81,11 +82,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   onTap: () {
                     if (menu.leaf) {
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (BuildContext context) =>
+                      //             Transaction(menuVO: menu)));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  Transaction(menuVO: menu)));
+                                  TransactionNew(menuType: menu.type)));
                     } else {
                       Navigator.push(
                           context,

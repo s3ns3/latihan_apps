@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:latihan_apps/logic/transaction_logic.dart';
 import 'package:latihan_apps/transaction.dart';
+import 'package:latihan_apps/transaction_new.dart';
 import 'package:latihan_apps/vo/menu_vo.dart';
 
 class SubMenuScreen extends StatelessWidget {
@@ -46,12 +48,20 @@ class SubMenuScreen extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        onTap: () {
+        onTap: () async {
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (BuildContext context) =>
+          //             Transaction(menuVO: menuVO))
+          // );
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      Transaction(menuVO: menuVO)));
+                      TransactionNew(menuType: menuVO.type,)
+              )
+          );
         },
       );
     }).toList());
